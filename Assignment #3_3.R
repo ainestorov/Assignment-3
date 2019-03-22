@@ -40,7 +40,7 @@ print(brands_share)
 choicePrice.df$type <- choicePrice.df$choice
 choicePrice.df$type[choicePrice.df$type < 7] <- 1
 choicePrice.df$type[choicePrice.df$type > 6] <- 2
-type_share <- data.frame(cbind(c("Tub","Stick"),paste(round(100*table(choicePrice.df$type)/
+type_share <- data.frame(cbind(c("Stick","Tub"),paste(round(100*table(choicePrice.df$type)/
                                        nrow(choicePrice.df),digits = 2),"%")))
 colnames(type_share) <- c("type", "mkt_share")
 print(type_share)
@@ -243,9 +243,10 @@ beta_r <- nlm(mxdlogit_mll, all_data_new, X_prices_new, X_demo_new, y=choice_new
 ## rows from the unrestricted model that correspond to the betas in choice 10 which I removed. 
 beta_f_new <- beta_f[-c(10, 19, 28, 37, 46, 55, 64)]
 
-## I calculate the MTT test statistic as defined in the assignment.
+## I calculate the MTT test statistic as defined in the assignment. It equals -1.75.
 mtt <- -2*(mxdlogit_mll(beta_f_new, X_prices_new, X_demo_new, choice_new, 57)-
             mxdlogit_mll(beta_r, X_prices_new, X_demo_new, choice_new, 57))
+print(mtt)
 
 ## Finally, I test the p-value for the MTT which is a chi-squared distribution with 57 degrees of 
 ## freedom, representing the 57 betas we found. We find that the p-value is extremely small at 
